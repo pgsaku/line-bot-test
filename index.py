@@ -32,9 +32,12 @@ def collback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    user_id = event.source.user_id
+    profile = line_bot_api.get_profile(user_id)
+
     received_text = event.message.text
 
-    send_text = 'hello world'
+    send_text = profile.display_name + 'さん hello world'
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=send_text)
